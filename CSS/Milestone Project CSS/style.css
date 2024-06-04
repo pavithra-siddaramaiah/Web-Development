@@ -1,0 +1,10 @@
+.introduction{
+    text-align: center;
+    height: 400px;
+    background-image: linear-gradient(to right, rgb(126, 161, 237) , rgb(165, 208, 239));
+}
+.name{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-top: 100px;
+    
+}
