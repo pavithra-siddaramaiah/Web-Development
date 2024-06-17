@@ -8,7 +8,7 @@ function App() {
   function handleFirstName(event) {
     setFirstName(event.target.value);
   }
-
+  
   function handleLastName(event) {
     setLastName(event.target.value);
   }
