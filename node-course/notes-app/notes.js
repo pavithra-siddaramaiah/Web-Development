@@ -1,17 +1,16 @@
 const chalk = require('chalk')
 const fs = require('fs')
 
-const getNotes = function(){
-    return 'Adding Notes...'
-}
 
-const addNote = function(title, body) {
+const addNote = (title, body) => {
     const notes = loadNote()
 
-    const duplicateNotes = notes.filter(function(notes){
-        return notes.title === title
-    })
-    if(duplicateNotes.length === 0) {
+    // const duplicateNotes = notes.filter((notes) => 
+    //     notes.title === title
+    const duplicateNote = notes.find((notes) => 
+        notes.title === title
+    )
+    if(!duplicateNote) {
         notes.push({
             title: title,
             body: body
@@ -26,12 +25,12 @@ const addNote = function(title, body) {
 
 }
 
-const saveNote = function(notes){
+const saveNote = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNote = function() {
+const loadNote = () => {
     try {
         const dataBuffer = fs.readFileSync('notes.json')
         const data = dataBuffer.toString()
@@ -42,16 +41,16 @@ const loadNote = function() {
     }
 }
 
-const removeNote = function(title){
+const removeNote = (title) => {
     
     const notes = loadNote();
-    const countNote = notes.filter(function(note){
-        return note.title === title
-    })
+    const countNote = notes.filter((note) => 
+         note.title === title
+    )
     if (countNote.length !== 0) {
-        const matchNote = notes.filter(function(note) {
-            return note.title !== title
-           })
+        const matchNote = notes.filter((note) =>
+             note.title !== title
+           )
            const removedData = JSON.stringify(matchNote)
            fs.writeFileSync('notes.json', removedData)
            console.log(chalk.bgGreen('Note Removed!'));
@@ -62,10 +61,32 @@ const removeNote = function(title){
    
 }
 
+const listNote = () => {
+    const nodeList = loadNote();
+        console.log(chalk.bgGreen('Your Notes...'))
+        console.log(nodeList)
+        nodeList.forEach((node) => {
+            console.log(node.title)
+        })
+}
 
+const readNote = (title) => {
+    const notes = loadNote();
+    const read = notes.find((note) => {
+        return note.title === title
+    })
+    if (read) {
+        console.log(chalk.bgGreen(read.title),read.body)
+    }
+    else {
+        console.log(chalk.bgRed('No note found!!'))
+    }
+    
+}
 
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNote: listNote,
+    readNote: readNote
 }
